@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE> [External] : Re: Final variable initialization problem with exhaustive switch
+    </TITLE>
+    <LINK REL="Index" HREF="index.html" >
+    <LINK REL="made" HREF="mailto:amber-dev%40openjdk.java.net?Subject=Re%3A%20%5BExternal%5D%20%3A%20Re%3A%20Final%20variable%20initialization%20problem%20with%0A%20exhaustive%20switch&In-Reply-To=%3CEC8163C5-3D6F-4A0D-A0D3-F7371B82F1A1%40oracle.com%3E">
+    <META NAME="robots" CONTENT="index,nofollow">
+    <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+    <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+
+    <LINK REL="Next"  HREF="007180.html">
+    <script >bazadebezolkohpepadr="962955843"</script><script type="text/javascript" src="https://mail.openjdk.org/akam/13/39658ad7"  defer></script></HEAD>
+<BODY BGCOLOR="#ffffff">
+<H1>[External] : Re: Final variable initialization problem with exhaustive switch</H1>
+<B>John Rose</B>
+<A HREF="mailto:amber-dev%40openjdk.java.net?Subject=Re%3A%20%5BExternal%5D%20%3A%20Re%3A%20Final%20variable%20initialization%20problem%20with%0A%20exhaustive%20switch&In-Reply-To=%3CEC8163C5-3D6F-4A0D-A0D3-F7371B82F1A1%40oracle.com%3E"
+   TITLE="[External] : Re: Final variable initialization problem with exhaustive switch">john.r.rose at oracle.com
+</A><BR>
+<I>Wed Dec  1 04:22:17 UTC 2021</I>
+<P><UL>
+
+    <LI>Next message (by thread): <A HREF="007180.html">[External] : Re: Final variable initialization problem with exhaustive switch
+    </A></li>
+    <LI> <B>Messages sorted by:</B>
+        <a href="date.html#7179">[ date ]</a>
+        <a href="thread.html#7179">[ thread ]</a>
+        <a href="subject.html#7179">[ subject ]</a>
+        <a href="author.html#7179">[ author ]</a>
+    </LI>
+</UL>
+<HR>
+<!--beginarticle-->
+<PRE>
+
+&gt;<i> On Nov 30, 2021, at 8:06 AM, Remi Forax &lt;<A HREF="https://mail.openjdk.java.net/mailman/listinfo/amber-dev">forax at univ-mlv.fr</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> Fortunately, a warning does not break the code.
+</I>
+That would help. Such a warning would note where there are two good answers and the language has to pick one but the user might well be thinking of the other.
+
+There should be ways to fix the warning very simply and without excess noise. For the legacy behavior I think this line works:
+
+  default -&gt; break;
+
+There is no correspondingly simple way to ask for an exhaustiveness check but some have suggested in the past this new syntax:
+
+   default -&gt; throw;
+
+The meaning of a lone throw would be &#8220;make a suitable exception for this spot in thhis switch and throw it&#8221;. Defining suitable is tricky since it is a DWIM request.
+
+Others have suggested putting the explicit selection at the top, by allowing the switch to accept an extra keyword to say whether it is supposed to be exhaustive.
+
+The problem with any of these fixes is they feel like a complexity tax on the language for very little expressive gain.
+</PRE>
+
+
+<!--endarticle-->
+<HR>
+<P><UL>
+    <!--threads-->
+
+    <LI>Next message (by thread): <A HREF="007180.html">[External] : Re: Final variable initialization problem with exhaustive switch
+    </A></li>
+    <LI> <B>Messages sorted by:</B>
+        <a href="date.html#7179">[ date ]</a>
+        <a href="thread.html#7179">[ thread ]</a>
+        <a href="subject.html#7179">[ subject ]</a>
+        <a href="author.html#7179">[ author ]</a>
+    </LI>
+</UL>
+
+<hr>
+<a href="https://mail.openjdk.java.net/mailman/listinfo/amber-dev">More information about the amber-dev
+    mailing list</a><br>
+<noscript><img src="https://mail.openjdk.org/akam/13/pixel_39658ad7?a=dD01Y2JiYTlhMjJlNmZkZjFiOTJjMWIzY2NjZGYxOGFlZDhiZjFlNmIzJmpzPW9mZg==" style="visibility: hidden; position: absolute; left: -999px; top: -999px;" /></noscript></body></html>
