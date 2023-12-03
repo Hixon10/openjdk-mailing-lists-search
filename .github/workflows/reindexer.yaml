@@ -18,6 +18,10 @@ jobs:
         run: cd docs && ls *.zip | xargs -I {} bash -c '7z x {}'
       - name: Build database from parts
         run: cat ./docs/db-part-[0-9][0-9] > ./docs/emailindex.db
+      - name: Calculate database sha256sum
+        run: echo "emailindex_db_sha=$(sha256sum ./docs/emailindex.db |  cut -d ' ' -f 1)" >> "$GITHUB_ENV"
+      - name: Print database sha256sum
+        run: echo $emailindex_db_sha
       - name: Remove old parts
         run: rm ./docs/db-part*        
       - name: Update email index
@@ -30,5 +34,5 @@ jobs:
         run: rm ./docs/db-part-[0-9][0-9]
       - name: Write database size to file
         run: cd docs && new_size=`du -b emailindex.db | cut -f1`; current_size=`cat dbsize.txt | cut -d "|" -f1`; timestamp=$(date +%s); if [ $new_size != $current_size ]; then echo $new_size"|"$timestamp > dbsize.txt; fi;        
-      - name: Commit db changes
-        run: git config user.email "github-action@example.com" && git config user.name "Github Action" && git add docs/db-part-* && git add docs/dbsize.txt && (git diff-index --quiet HEAD || (git commit --message="update index" && git push origin main))
+      - name: Commit db changes, if there are new changes
+        run: if [[ $emailindex_db_sha == $(sha256sum ./docs/emailindex.db |  cut -d ' ' -f 1) ]] git config user.email "github-action@example.com" && git config user.name "Github Action" && git add docs/db-part-* && git add docs/dbsize.txt && (git diff-index --quiet HEAD || (git commit --message="update index" && git push origin main))
