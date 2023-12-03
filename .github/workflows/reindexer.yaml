@@ -35,4 +35,4 @@ jobs:
       - name: Write database size to file
         run: cd docs && new_size=`du -b emailindex.db | cut -f1`; current_size=`cat dbsize.txt | cut -d "|" -f1`; timestamp=$(date +%s); if [ $new_size != $current_size ]; then echo $new_size"|"$timestamp > dbsize.txt; fi;        
       - name: Commit db changes, if there are new changes
-        run: if [ $emailindex_db_sha == $(sha256sum ./docs/emailindex.db |  cut -d ' ' -f 1) ]; then git config user.email "github-action@example.com" && git config user.name "Github Action" && git add docs/db-part-* && git add docs/dbsize.txt && (git diff-index --quiet HEAD || (git commit --message="update index" && git push origin main)); fi;
+        run: if [ $emailindex_db_sha != $(sha256sum ./docs/emailindex.db |  cut -d ' ' -f 1) ]; then git config user.email "github-action@example.com" && git config user.name "Github Action" && git add docs/db-part-* && git add docs/dbsize.txt && (git diff-index --quiet HEAD || (git commit --message="update index" && git push origin main)); fi;
